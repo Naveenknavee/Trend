@@ -41,10 +41,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh """
-                sudo aws eks update-kubeconfig --name my-eks-cluster --region ap-south-1
-                sudo kubectl get ns
-                sudo kubectl create -f deployment.yaml
-                sudo kubectl get pods 
+                aws eks update-kubeconfig --name my-eks-cluster --region ap-south-1
+                kubectl get ns
+                kubectl apply -f deployment.yaml
+                kubectl get pods 
                 """
             }
         }
