@@ -41,7 +41,9 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh """
-                kubectl set image deployment/trend-deployment trend-container=$IMAGE --record
+                aws eks update-kubeconfig --name my-eks-cluster --region ap-south-1
+                kubectl get ns
+                kubectl get pods
                 """
             }
         }
