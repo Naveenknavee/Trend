@@ -43,7 +43,8 @@ pipeline {
                 sh """
                 sudo aws eks update-kubeconfig --name my-eks-cluster --region ap-south-1
                 sudo kubectl get ns
-                sudo kubectl get pods
+                sudo kubectl -f deployment.yaml
+                sudo kubectl get pods 
                 """
             }
         }
