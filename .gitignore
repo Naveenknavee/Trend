@@ -1,0 +1,8 @@
+admin.pem
+main.tf
+terraform.tfstate
+terraform.tfstate.backup
+.terraform
+.terraform.lock.hcl
+package-lock.json
+node_modules

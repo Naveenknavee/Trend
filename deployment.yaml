@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trend-deployment
+  labels:
+    app: trend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trend
+  template:
+    metadata:
+      labels:
+        app: trend
+    spec:
+      containers:
+        - name: trend-container
+          image: naveenknavee/trend:latest
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
