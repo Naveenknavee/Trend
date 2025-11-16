@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_USER = credentials('dockerhub')
+        IMAGE = "${DOCKERHUB_USER_USR}/trend:latest"
+    }
+
+    stages {
+
+        stage('Clone Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Vennilavan12/Trend.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh """
+                docker build -t $IMAGE .
+                """
+            }
+        }
+
+        stage('Login to DockerHub') {
+            steps {
+                sh """
+                echo "$DOCKERHUB_USER_PSW" | docker login -u "$DOCKERHUB_USER_USR" --password-stdin
+                """
+            }
+        }
+
+        stage('Push Image to DockerHub') {
+            steps {
+                sh """
+                docker push $IMAGE
+                """
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh """
+                kubectl set image deployment/trend-deployment trend-container=$IMAGE --record
+                """
+            }
+        }
+    }
+}
