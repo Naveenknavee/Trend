@@ -1,0 +1,75 @@
+server locally
+serve -s dist 
+http://localhost:3000
+
+[folk and clone github repo to remote]
+
+[Dockerize the application by creating Dockerfile]
+-->start the docker daemon
+docker build -t trend .
+docker run -d -p 3000:80 trend
+
+http://localhost:3000 # Access the application
+
+
+Define infrastructure in main.tf to create VPC, IAM, EC2 with Jenkins, etc.
+[Refer main.tf for more details on infrastructure]
+terraform init
+terraform plan  
+terraform apply auto-approve
+
+
+[Create a DockerHub repository.]
+Repo name: naveenknavee/trend
+
+[Create gitignore file to ignore files/folders]
+add terraform.tfstate
+add .terraform/
+add .terraform.tfstate.backup
+add package-lock.json
+
+[Jenkins]
+
+aws configure
+install docker or add plugin to jenkins
+install kubernetes plugin to jenkins
+install aws cli plugin to jenkins or manually configure aws cli in jenkins server
+add jenkins user to docker group
+aws configure -->jenkins user
+authenticate aws cli with jenkins user
+add dockerhub credentials to jenkins -credential id: dockerhubid
+create a jenkins pipeline job with following jenkinsfile ref
+clone-build-dockerimage-login to dockerhub-push to dockerhub-deploy to EKS cluster
+
+
+[Create EKS cluster cli]
+
+eksctl create cluster \
+  --name my-eks \
+  --region ap-south-1 \
+  --nodes 2 \
+  --node-type t3.medium \
+  --managed
+
+[Configure jenkins pipeline to deploy to EKS cluster]
+
+create a new jenkins pipeline job
+select
+main branch
+add pipeline script from scm
+add git url 
+jenkinsfile
+
+pipeline  will deploy the application to EKS cluster
+copy the loadbalancer url from aws eks console to access the application
+
+monitoring sertup
+install  agent in node exporter EKS cluster
+install prometheus server in EKS cluster
+
+
+
+
+kubernetes continues deploy plugin
+'aws eks update-kubeconfig --name <clustername> --region ap-south-1'
+
