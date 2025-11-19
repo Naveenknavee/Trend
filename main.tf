@@ -150,7 +150,7 @@ resource "aws_instance" "jenkins_server" {
   user_data = <<-EOF
     #!/bin/bash
     apt update -y
-    apt install openjdk-11-jdk -y
+    apt install openjdk-21-jdk -y
     curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | tee \
       /usr/share/keyrings/jenkins-keyring.asc > /dev/null
     echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
