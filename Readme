@@ -64,12 +64,29 @@ pipeline  will deploy the application to EKS cluster
 copy the loadbalancer url from aws eks console to access the application
 
 monitoring sertup
-install  agent in node exporter EKS cluster
-install prometheus server in EKS cluster
+install  node exporter EKS cluster using kubectl commands
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/node-exporter-service.yaml
 
+Running promethus and grafana as a docker continer in jenkins server 
+access via port 9090 and 3000
 
+add promethus.yaml run the file
+add the target ip address to fench the data 
 
+kubectl get svc -n monitoring | grep node-exporter
+fench the ip address for eks cluster
 
-kubernetes continues deploy plugin
-'aws eks update-kubeconfig --name <clustername> --region ap-south-1'
+docker restart prometheus-local
+
+Login:
+user: admin
+password: admin
+Add data source:
+Prometheus URL = pass url to grafana for vizualizing 
+
+Dashboard Type              	ID
+Kubernetes Cluster Monitoring	315
+Node Exporter Full          	1860
+
+accees the dash board in port 3000 
 
